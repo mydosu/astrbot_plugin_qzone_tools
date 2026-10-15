@@ -6484,13 +6484,11 @@ AI语音：角色（获取可用的AI语音角色列表）、语音（发送指�
             
             if self.config.get("inject_tool_prompt_enabled", False):
                 inject_parts.append(self._TOOL_PROMPT)
-            
-            inject_parts.append("""[重要工具使用规范] 你需要调用功能时，必须遵循以下步骤：
-1. 首先使用 search_wyc_tools 工具，传入简短关键词（例如"邮箱"、"禁言"、"发说说"、"记忆"、"状态"、"资料"），不要使用完整问句！
-2. 如果 search_wyc_tools 未找到，再尝试 call_wyc_tools 查看全部可用工具列表。
-3. 确定工具名称后，使用 run_wyc_tool 并传入工具名称和 JSON 格式的参数。
-禁止直接猜测工具名称，必须通过搜索获取。""")
-            
+
+            inject_parts.append("""[QZoneTools 工具入口]
+仅使用本插件的扩展功能时，先用 search_wyc_tools 搜索简短关键词；没有找到再用 call_wyc_tools 查看列表，然后用 run_wyc_tool 执行检索到的工具。
+此流程只约束 QZoneTools，不适用于其他已注册工具。LivingMemory 的长期记忆直接使用 recall_long_term_memory；其他工具直接按照各自的参数说明调用。""")
+
             status_desc = self.status_manager.get_current_status_desc()
             inject_parts.append(f"[系统状态] {status_desc}")
 
